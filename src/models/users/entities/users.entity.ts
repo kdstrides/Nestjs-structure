@@ -1,26 +1,12 @@
-import {
-  Entity,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { BaseModelEntity } from 'src/models/entities/base.entity';
 import { IUser } from 'src/models/users/interfaces/users.interface';
 
 @Entity({ name: 'users' })
-export class User implements IUser {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class User extends BaseModelEntity implements IUser {
   @Column()
   email: string;
 
   @Column()
   password: string;
-
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
-  updatedAt: Date;
 }

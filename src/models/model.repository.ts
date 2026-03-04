@@ -1,16 +1,20 @@
 import { plainToClass } from 'class-transformer';
-import { Repository, DeepPartial } from 'typeorm';
+import { Repository, DeepPartial, FindOptionsWhere } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { NotFoundException } from '@nestjs/common';
 import { ModelEntity } from 'src/common/serializers/model.serializer';
 
-export class ModelRepository<T, K extends ModelEntity> extends Repository<T> {
+export class ModelRepository<
+  T extends { id: string },
+  K extends ModelEntity,
+> extends Repository<T> {
   async get(
     id: string,
     relations: string[] = [],
     throwsException = false,
   ): Promise<K | null> {
     return await this.findOne({
+      where: { id } as FindOptionsWhere<T>,
       relations,
     })
       .then((entity) => {
