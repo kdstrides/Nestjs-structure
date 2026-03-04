@@ -15,8 +15,12 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return the MVMNT intro page', () => {
+      const page = appController.getMvmntPage();
+
+      expect(page).toContain('<title>MVMNT | Move with Purpose</title>');
+      expect(page).toContain('<h1>MVMNT</h1>');
+      expect(page).toContain('https://mvmnts.com');
     });
   });
 });
