@@ -10,20 +10,20 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class UsersRepository extends ModelRepository<User, UserEntity> {
   constructor(
-    @InjectRepository(UserEntity)
-      repository: Repository<UserEntity>
+    @InjectRepository(User)
+    repository: Repository<User>,
   ) {
     super(repository.target, repository.manager, repository.queryRunner);
   }
 
   transform(model: User): UserEntity {
-    const tranformOptions = {
+    const transformOptions = {
       groups: allUserGroupsForSerializing,
     };
     return plainToClass(
       UserEntity,
-      instanceToPlain(model, tranformOptions),
-      tranformOptions,
+      instanceToPlain(model, transformOptions),
+      transformOptions,
     );
   }
 

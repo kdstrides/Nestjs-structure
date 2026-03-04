@@ -3,7 +3,7 @@ import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 import { DatabaseType } from 'typeorm';
 import { DatabaseConfigModule } from 'src/config/database/config.module';
 import { DatabaseConfigService } from 'src/config/database/config.service';
-import { UserEntity } from 'src/models/users/serializers/users.serializer';
+import { User } from 'src/models/users/entities/users.entity';
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import { UserEntity } from 'src/models/users/serializers/users.serializer';
         database: postgresConfigService.database,
         synchronize: Boolean(postgresConfigService.synchronize),
         logging: Boolean(postgresConfigService.logging),
-        entities: [UserEntity],
+        entities: [User],
       }),
       inject: [DatabaseConfigService],
     } as TypeOrmModuleAsyncOptions),

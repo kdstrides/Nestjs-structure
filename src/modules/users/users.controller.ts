@@ -1,5 +1,6 @@
 import {
   Get,
+  Param,
   Put,
   Post,
   Body,
@@ -8,11 +9,8 @@ import {
   SerializeOptions,
   ClassSerializerInterceptor,
 } from '@nestjs/common';
-import { from } from 'rxjs';
-import { QueriedEntity } from 'src/common/decorators';
 import {
   UserEntity,
-  defaultUserGroupsForSerializing,
   extendedUserGroupsForSerializing,
 } from 'src/models/users/serializers/users.serializer';
 import { UsersService } from './users.service';
@@ -26,8 +24,8 @@ export class UsersController {
 
   @Get('/:id')
   @UseInterceptors(ClassSerializerInterceptor)
-  async get(@QueriedEntity() user: UserEntity): Promise<UserEntity> {
-    return user;
+  async get(@Param('id') id: string): Promise<UserEntity> {
+    return (await this.usersService.get(id, [], true)) as UserEntity;
   }
 
   @Post('/')
@@ -39,9 +37,10 @@ export class UsersController {
   @Put('/:id')
   @UseInterceptors(ClassSerializerInterceptor)
   async update(
-    @QueriedEntity() user: UserEntity,
+    @Param('id') id: string,
     @Body() inputs: any,
   ): Promise<UserEntity> {
+    const user = (await this.usersService.get(id, [], true)) as UserEntity;
     return await this.usersService.update(user, inputs);
   }
 }
