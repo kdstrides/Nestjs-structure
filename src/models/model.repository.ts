@@ -11,6 +11,9 @@ export class ModelRepository<T, K extends ModelEntity> extends Repository<T> {
     throwsException = false,
   ): Promise<K | null> {
     return await this.findOne({
+      where: {
+        id,
+      } as any,
       relations,
     })
       .then((entity) => {

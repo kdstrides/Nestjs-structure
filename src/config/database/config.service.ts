@@ -11,7 +11,7 @@ export class DatabaseConfigService {
   constructor(private configService: ConfigService) {}
 
   get database(): string {
-    return this.configService.get<string>('database.name');
+    return this.configService.get<string>('database.database');
   }
 
   get host(): string {
@@ -30,15 +30,15 @@ export class DatabaseConfigService {
     return Number(this.configService.get<number>('database.port'));
   }
 
-  get synchronize(): number {
-    return Number(this.configService.get<number>('database.synchronize'));
+  get synchronize(): boolean {
+    return this.configService.get<boolean>('database.synchronize');
   }
 
-  get logging(): number {
-    return Number(this.configService.get<number>('database.logging'));
+  get logging(): boolean {
+    return this.configService.get<boolean>('database.logging');
   }
 
-  get entities(): number {
-    return Number(this.configService.get<number>('database.entities'));
+  get entities(): any[] {
+    return this.configService.get<any[]>('database.entities');
   }
 }
