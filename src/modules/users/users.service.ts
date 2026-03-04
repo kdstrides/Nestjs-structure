@@ -1,14 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { UsersRepository } from 'src/modules/users/users.repository';
 import { UserEntity } from 'src/models/users/serializers/users.serializer';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectRepository(UsersRepository)
-    private readonly usersRepository: UsersRepository,
-  ) {}
+  constructor(private readonly usersRepository: UsersRepository) {}
+
   async get(
     id: string,
     relations: string[] = [],
