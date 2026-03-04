@@ -1,12 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { UsersRepository } from 'src/modules/users/users.repository';
 import { UserEntity } from 'src/models/users/serializers/users.serializer';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(UsersRepository)
     private readonly usersRepository: UsersRepository,
   ) {}
   async get(
@@ -20,6 +18,6 @@ export class UsersService {
     return await this.usersRepository.createEntity(inputs);
   }
   async update(user: UserEntity, inputs: any): Promise<UserEntity> {
-    return await this.usersRepository.updateEntity(inputs, null);
+    return await this.usersRepository.updateEntity(user, inputs);
   }
 }
